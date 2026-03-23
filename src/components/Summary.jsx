@@ -19,12 +19,12 @@ const Summary = () => {
       scrollTrigger: {
         trigger: '.scrub-text',
         start: 'top 80%',
-        end: 'bottom 50%',
+        end: 'bottom 70%',
         scrub: true
       },
       opacity: 1,
       color: 'var(--text-primary)',
-      stagger: 0.1
+      stagger: 0.05
     });
 
     gsap.from('.brutalist-skill-item', {

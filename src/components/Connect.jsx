@@ -1,10 +1,26 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { Github, Linkedin, Send, Download } from 'lucide-react';
 
 const Connect = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const checkTouch = () => {
+      const hasCoarsePointer = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      setIsTouchDevice(hasCoarsePointer);
+    };
+    
+    checkTouch();
+    
+    const mediaQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
+    const handleChange = (e) => setIsTouchDevice(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
@@ -31,27 +47,29 @@ const Connect = () => {
         ease: "power3.out"
       });
 
-      document.querySelectorAll('.brutalist-mag-btn').forEach(el => {
-        el.addEventListener('mousemove', (e) => {
-          const rect = el.getBoundingClientRect();
-          const relX = e.clientX - rect.left - rect.width/2;
-          const relY = e.clientY - rect.top - rect.height/2;
-          
-          gsap.to(el, {
-            x: relX * 0.4,
-            y: relY * 0.4,
-            duration: 0.4,
-            ease: "power2.out"
+      if (!isTouchDevice) {
+        document.querySelectorAll('.brutalist-mag-btn').forEach(el => {
+          el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const relX = e.clientX - rect.left - rect.width/2;
+            const relY = e.clientY - rect.top - rect.height/2;
+            
+            gsap.to(el, {
+              x: relX * 0.4,
+              y: relY * 0.4,
+              duration: 0.4,
+              ease: "power2.out"
+            });
+          });
+
+          el.addEventListener('mouseleave', () => {
+            gsap.to(el, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.3)" });
           });
         });
-
-        el.addEventListener('mouseleave', () => {
-          gsap.to(el, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.3)" });
-        });
-      });
+      }
     });
     return () => ctx.revert();
-  }, []);
+  }, [isTouchDevice]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -99,7 +117,7 @@ const Connect = () => {
               onChange={(e) => setFormData({...formData, message: e.target.value})}
               style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', minHeight: '100px', textTransform: 'uppercase', resize: 'vertical' }}
             ></textarea>
-            <button type="submit" className="brutalist-mag-btn hover-target" disabled={isSubmitting} style={{ 
+            <button type="submit" className="brutalist-mag-btn submit-btn hover-target" disabled={isSubmitting} style={{ 
               alignSelf: 'flex-start', 
               background: 'var(--text-primary)', 
               color: 'var(--bg-color)', 
@@ -134,7 +152,7 @@ const Connect = () => {
       
       <footer style={{ marginTop: '5vh', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-muted)' }}>
         <p style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>© 2026 Anamika Vinesh</p>
-        <p style={{ fontStyle: 'italic', fontFamily: 'var(--font-heading)' }}>Built with ML Mastery.</p>
+        <a href="mailto:anamikavinesh12@gmail.com" className="footer-link hover-target" style={{ fontStyle: 'italic', fontFamily: 'var(--font-heading)', color: 'var(--text-muted)', textDecoration: 'none' }}>Built with ML Mastery.</a>
       </footer>
     </section>
   );

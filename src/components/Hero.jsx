@@ -15,14 +15,14 @@ const Hero = () => {
 
       gsap.to('.avatar-orbit', {
         rotation: 360,
-        duration: 20,
+        duration: 24,
         repeat: -1,
         ease: 'none'
       });
       
       gsap.to('.avatar-orbit-reverse', {
         rotation: -360,
-        duration: 25,
+        duration: 30,
         repeat: -1,
         ease: 'none'
       });

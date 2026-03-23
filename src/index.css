@@ -850,3 +850,283 @@ h1, h2, h3 {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ============================================
+   ANIMATIONS & MICRO-INTERACTIONS
+   ============================================ */
+
+/* --- Scroll Progress Bar --- */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    transform-origin: left;
+    z-index: 10001;
+    pointer-events: none;
+}
+
+/* --- Theme Toggle Icon Animation --- */
+.theme-toggle {
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(var(--accent), 0.3);
+}
+
+.toggle-icon svg {
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.3s ease;
+}
+
+[data-theme="dark"] .toggle-icon svg {
+    transform: rotate(180deg);
+}
+
+/* --- Hero Social Buttons Hover --- */
+.hero-social-btn {
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.25s ease,
+                background-color 0.25s ease;
+}
+
+.hero-social-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .hero-social-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Hero CV Button Hover --- */
+.hero-btn-primary {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                color 0.25s ease,
+                background-color 0.25s ease;
+}
+
+.hero-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--accent);
+    transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
+}
+
+.hero-btn-primary:hover {
+    transform: scale(1.02);
+}
+
+.hero-btn-primary:hover::before {
+    left: 0;
+}
+
+.hero-btn-primary:hover svg {
+    transform: translateX(4px);
+}
+
+.hero-btn-primary svg {
+    transition: transform 0.25s ease;
+}
+
+/* --- Brutalist Card Hover --- */
+.brutalist-card {
+    transition: box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.brutalist-card:hover {
+    box-shadow: 12px 12px 0 var(--card-shadow);
+    transform: translate(-2px, -2px);
+}
+
+/* --- Skills Pills Hover --- */
+.brutalist-skill-item {
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                border-color 0.25s ease,
+                color 0.25s ease;
+}
+
+.brutalist-skill-item:hover {
+    transform: scale(1.05);
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+}
+
+/* --- Project Slide Hover --- */
+.project-slide {
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transform-style: preserve-3d;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .project-slide:hover {
+        transform: perspective(1000px) rotateY(-3deg) rotateX(2deg);
+    }
+}
+
+/* --- Project Image Hover --- */
+.image-mask {
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.project-slide:hover .image-mask {
+    transform: scale(1.02);
+}
+
+/* --- Brutalist List Items Hover --- */
+.brutalist-list-item {
+    transition: padding-left 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                background-color 0.3s ease;
+}
+
+.brutalist-list-item:hover {
+    padding-left: 1rem;
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="dark"] .brutalist-list-item:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* --- Footer Link Hover --- */
+.footer-link {
+    position: relative;
+    display: inline-block;
+}
+
+.footer-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.footer-link:hover::after {
+    width: 100%;
+}
+
+/* --- Submit Button Hover --- */
+.submit-btn {
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.25s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+/* --- Section Wipe Animation --- */
+.section {
+    position: relative;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 100;
+}
+
+.section.in-view::before {
+    height: 100%;
+}
+
+/* --- Brutalist Contact Grid Links Hover --- */
+.brutalist-mag-btn:not(.submit-btn) {
+    position: relative;
+    transition: color 0.25s ease;
+}
+
+.brutalist-mag-btn:not(.submit-btn)::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--text-primary);
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.brutalist-mag-btn:not(.submit-btn):hover::after {
+    width: 100%;
+}
+
+/* --- Avatar Glow on Scroll --- */
+.hero-avatar-wrapper {
+    transition: filter 0.5s ease;
+}
+
+.hero-avatar-wrapper:hover {
+    filter: drop-shadow(0 0 20px rgba(var(--accent), 0.3));
+}
+
+/* --- Form Input Focus Animation --- */
+.form-group {
+    position: relative;
+}
+
+.form-group input,
+.form-group textarea {
+    transition: border-color 0.3s ease,
+                transform 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* --- Massive Text Stagger --- */
+.massive-connect-text {
+    will-change: transform, opacity;
+}
+
+/* --- Avatar Orbit Pulse --- */
+.avatar-orbit,
+.avatar-orbit-reverse {
+    will-change: transform;
+}
+
+/* --- Liquid Filter Smooth --- */
+.liquid-hover {
+    will-change: filter;
+}
+
+/* --- Smooth Section Transitions --- */
+#summary,
+#milestones,
+#projects,
+#marks,
+#connect {
+    opacity: 1;
+}

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect, useState } from 'react';
+import React, { useLayoutEffect, useEffect, useState, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
@@ -18,6 +18,7 @@ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useLayoutEffect(() => {
     const lenis = new Lenis({
@@ -27,7 +28,11 @@ function App() {
       wheelMultiplier: 1.2,
     });
 
-    lenis.on('scroll', ScrollTrigger.update);
+    lenis.on('scroll', (e) => {
+      const progress = Math.min(1, Math.max(0, e.scroll / (document.documentElement.scrollHeight - window.innerHeight)));
+      setScrollProgress(progress);
+      ScrollTrigger.update();
+    });
 
     const raf = (time) => {
       lenis.raf(time);
@@ -57,6 +62,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
       <Cursor />
       <ThemeToggle isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
 
