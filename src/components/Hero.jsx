@@ -41,15 +41,15 @@ const Hero = () => {
       <div className="container" style={{ zIndex: 2, position: 'relative', width: '100%' }}>
         <div className="split-layout" style={{ alignItems: 'center', margin: '2rem 0' }}>
           
-          <div className="hero-content-left" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div className="hero-content-left" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
             
             <p className="hero-sub-label" style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
               Software Engineer
             </p>
             
-            <div className="hero-title-group" style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+            <div className="hero-title-group" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xs)' }}>
               <h1 className="hero-main-title" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', lineHeight: 1, fontWeight: 600, fontFamily: 'var(--font-body)' }}>
-                Hello I'm
+                Hi, I'm
               </h1>
               
               <div className="hero-main-title" style={{ display: 'inline-block', position: 'relative', width: 'fit-content', maxWidth: '100%' }}>
@@ -68,17 +68,17 @@ const Hero = () => {
               </div>
             </div>
 
-            <p className="hero-desc" style={{ fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '400px', margin: '0.5rem 0', fontFamily: 'var(--font-body)' }}>
-              Machine Learning Developer & CS Undergrad<br/>
-              Predictive Analytics | Computer Vision<br/>
+            <p className="hero-desc" style={{ fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '400px', margin: 'var(--spacing-xs) 0', fontFamily: 'var(--font-body)' }}>
+              ML Developer & CS Student<br/>
+              Predictive Analytics · Computer Vision<br/>
               India
             </p>
 
-            <div className="hero-actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            <div className="hero-actions" style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', flexWrap: 'wrap' }}>
               <a href="#connect" className="hero-btn-primary hover-target" style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.8rem',
+                gap: 'var(--spacing-xs)',
                 padding: '0.6rem 1.5rem',
                 border: '1px solid var(--accent)',
                 borderRadius: '50px',
@@ -86,14 +86,14 @@ const Hero = () => {
                 textDecoration: 'none',
                 fontFamily: 'var(--font-body)',
                 fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
+                fontWeight: 600,
+                letterSpacing: '0.05em',
                 transition: 'all 0.3s ease'
               }}>
                 View CV <ArrowRight size={14} aria-hidden="true" />
               </a>
               
-              <div style={{ display: 'flex', gap: '0.8rem' }}>
+              <div style={{ display: 'flex', gap: 'var(--spacing-xs)' }}>
                 <a href="https://github.com/iaaamnk" target="_blank" rel="noopener noreferrer" className="hero-social-btn hover-target" style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: '38px', height: '38px', border: '1px solid var(--accent)', borderRadius: '50%',

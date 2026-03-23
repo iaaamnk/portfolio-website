@@ -128,7 +128,7 @@ const Projects = () => {
     <section className="section projects-section" id="projects" ref={containerRef}>
       <div className="projects-accent-bar" aria-hidden="true"></div>
       <div className="container horizontal-header">
-        <h2 className="section-heading reveal-heading">Featured Features</h2>
+        <h2 className="section-heading reveal-heading">Projects</h2>
       </div>
       
       <div className="horizontal-slider" role="list" aria-label="Project showcase">

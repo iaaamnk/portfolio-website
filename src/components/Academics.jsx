@@ -48,15 +48,15 @@ const Academics = () => {
             {academicData.map((row, i) => (
               <div key={i} className="brutalist-list-item hover-target" style={{ 
                 borderTop: '2px solid var(--text-primary)', 
-                padding: '2rem 0', 
+                padding: 'var(--spacing-md) 0', 
                 display: 'flex', 
                 flexWrap: 'wrap',
                 alignItems: 'baseline',
                 justifyContent: 'space-between',
-                gap: '1rem'
+                gap: 'var(--spacing-sm)'
               }}>
                 <h3 style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', width: '100%', textTransform: 'uppercase', lineHeight: 1 }}>{row.degree}</h3>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', width: '100%', marginTop: '0.8rem' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--spacing-sm)', width: '100%', marginTop: 'var(--spacing-xs)' }}>
                     <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>{row.inst}</span>
                     <span style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--accent)' }}>{row.result}</span>
                     {row.year && <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>{row.year}</span>}
@@ -73,7 +73,7 @@ const Academics = () => {
             {achievementsData.map((item, i) => (
               <div key={i} className="brutalist-list-item hover-target" style={{ 
                 borderTop: '1px solid var(--border-color)', 
-                padding: '1.5rem 0', 
+                padding: 'var(--spacing-sm) 0', 
                 display: 'flex', 
                 justifyContent: 'space-between',
                 alignItems: 'center'
@@ -92,7 +92,7 @@ const Academics = () => {
             {certificationsData.map((item, i) => (
               <div key={i} className="brutalist-list-item hover-target" style={{ 
                 borderTop: '1px solid var(--border-color)', 
-                padding: '1.5rem 0', 
+                padding: 'var(--spacing-sm) 0', 
                 display: 'flex', 
                 justifyContent: 'space-between',
                 alignItems: 'center'

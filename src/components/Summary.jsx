@@ -58,15 +58,14 @@ const Summary = () => {
           </div>
         </div>
         
-        <div className="brutalist-skills" style={{ display: 'flex', flexWrap: 'wrap', gap: '1vw', marginTop: '2rem' }}>
-          <h3 style={{ width: '100%', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--accent)', marginBottom: '1rem' }}>Arsenal</h3>
+        <div className="brutalist-skills" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--spacing-sm)', marginTop: 'var(--spacing-md)' }}>
+          <h3 style={{ width: '100%', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--accent)', marginBottom: '1rem' }}>Skills</h3>
           {coreSkills.map(skill => (
             <span key={skill} className="brutalist-skill-item hover-target" style={{ 
               fontSize: 'clamp(1rem, 2.5vw, 2rem)', 
-              fontWeight: 500, 
-              textTransform: 'uppercase', 
+              fontWeight: 500,
               border: '2px solid var(--text-muted)', 
-              padding: '0.4rem 1.5vw', 
+              padding: 'var(--spacing-xs) var(--spacing-sm)', 
               borderRadius: '200px',
               transition: 'all 0.3s ease'
             }}>

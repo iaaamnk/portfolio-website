@@ -108,22 +108,22 @@ const Connect = () => {
         <h2 className="massive-connect-text" style={{ fontSize: 'clamp(2.5rem, 8vw, 6rem)', textTransform: 'uppercase', lineHeight: 0.9, letterSpacing: '-0.03em', margin: 0, color: 'var(--accent)' }}>Connect.</h2>
       </div>
 
-      <div className="brutalist-contact-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem', marginTop: '6vh' }}>
+      <div className="brutalist-contact-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--spacing-lg)', marginTop: 'var(--spacing-xl)' }}>
         
         <div>
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
             <div className="form-group">
               <label htmlFor="name" className="sr-only">Your Name</label>
               <input 
                 id="name"
                 type="text" 
                 name="name"
-                placeholder="YOUR NAME" 
+                placeholder="Your name" 
                 required 
                 value={formData.name}
                 onChange={handleChange}
                 aria-describedby="name-hint"
-                style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', textTransform: 'uppercase', width: '100%' }}
+                style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: 'var(--spacing-xs) 0', outline: 'none', width: '100%' }}
               />
               <span id="name-hint" className="sr-only">Enter your full name</span>
             </div>
@@ -134,12 +134,12 @@ const Connect = () => {
                 id="email"
                 type="email" 
                 name="email"
-                placeholder="YOUR EMAIL" 
+                placeholder="Your email" 
                 required 
                 value={formData.email}
                 onChange={handleChange}
                 aria-describedby="email-hint"
-                style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', textTransform: 'uppercase', width: '100%' }}
+                style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: 'var(--spacing-xs) 0', outline: 'none', width: '100%' }}
               />
               <span id="email-hint" className="sr-only">Enter your email address</span>
             </div>
@@ -149,12 +149,12 @@ const Connect = () => {
               <textarea 
                 id="message"
                 name="message"
-                placeholder="YOUR MESSAGE" 
+                placeholder="Your message" 
                 required
                 value={formData.message}
                 onChange={handleChange}
                 aria-describedby="message-hint message-count"
-                style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', minHeight: '100px', textTransform: 'uppercase', resize: 'vertical', width: '100%' }}
+                style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: 'var(--spacing-xs) 0', outline: 'none', minHeight: '100px', resize: 'vertical', width: '100%' }}
               ></textarea>
               <span id="message-hint" className="sr-only">Enter your message (max 500 characters)</span>
               <span id="message-count" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'right', marginTop: '0.25rem' }}>
@@ -165,7 +165,7 @@ const Connect = () => {
             {formStatus === 'success' && (
               <div role="alert" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent)', fontSize: '0.9rem' }}>
                 <Check size={18} />
-                <span>Opening email client...</span>
+                <span>Opening your email app...</span>
               </div>
             )}
             
@@ -188,7 +188,7 @@ const Connect = () => {
                 padding: '1rem 2rem', 
                 fontSize: '1rem', 
                 fontWeight: 600, 
-                textTransform: 'uppercase', 
+                letterSpacing: '0.05em',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -207,7 +207,7 @@ const Connect = () => {
           </form>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)', alignItems: 'flex-start' }}>
           <a href="/Anamika_Vinesh_Resume.pdf" download className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }} aria-label="Download Resume PDF">
             <Download size={24} aria-hidden="true" /> Resume
           </a>
@@ -223,7 +223,7 @@ const Connect = () => {
       <footer style={{ marginTop: '5vh', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-muted)', flexWrap: 'wrap', gap: '0.5rem' }}>
         <p style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>© {currentYear} Anamika Vinesh</p>
         <a href="mailto:anamikavinesh12@gmail.com" className="footer-link hover-target" style={{ fontStyle: 'italic', fontFamily: 'var(--font-heading)', color: 'var(--text-muted)', textDecoration: 'none' }}>
-          Built with ML Mastery.
+          Built with care.
         </a>
       </footer>
     </section>

@@ -15,9 +15,11 @@
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Outfit', sans-serif;
     
-    --spacing-xl: 5rem;
-    --spacing-lg: 3rem;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
     --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 5rem;
     
     --touch-target-min: 44px;
 }
