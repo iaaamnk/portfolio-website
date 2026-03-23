@@ -1,0 +1,666 @@
+/* --- Core Variables & Resets --- */
+:root {
+    --bg-color: #F0F0F0; 
+    --text-primary: #233D4D;
+    --text-muted: #30364F;
+    --accent: #96A78D;
+    --accent-light: #B6CEB4;
+    --accent-lighter: #D9E9CF;
+    
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Outfit', sans-serif;
+    
+    --spacing-xl: clamp(8rem, 15vw, 15rem);
+    --spacing-lg: clamp(4rem, 10vw, 10rem);
+    --spacing-md: clamp(2rem, 5vw, 5rem);
+    
+    --grid-color: rgba(35, 61, 77, 0.08); /* Dark navy grid for light mode */
+}
+
+[data-theme="dark"] {
+    --bg-color: #233D4D; 
+    --text-primary: #F0F0F0;
+    --text-muted: #D9E9CF;
+    --accent: #96A78D;
+    --accent-light: #B6CEB4;
+    --accent-lighter: #D9E9CF;
+    
+    --grid-color: rgba(240, 240, 240, 0.05); /* Light grid for dark mode */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    cursor: none; /* Custom Cursor */
+    overflow-x: hidden;
+}
+
+/* --- Smooth Scrolling (Lenis) --- */
+.smooth-wrapper {
+    overflow: hidden;
+}
+
+.smooth-content {
+    will-change: transform;
+}
+
+/* --- Global Canvases --- */
+#atmosphere-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.6; /* very subtle */
+}
+
+/* --- Custom Magnetic Cursor --- */
+.cursor {
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cursor.hover-large {
+    width: 100px;
+    height: 100px;
+}
+
+/* --- Theme Toggle --- */
+.theme-toggle {
+    position: fixed;
+    top: 2rem;
+    right: 3vw;
+    z-index: 10000;
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-primary);
+    border-radius: 30px;
+    width: 60px;
+    height: 30px;
+    cursor: none; /* Let custom cursor handle it */
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    transition: all 0.4s ease;
+}
+
+.theme-toggle .icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: var(--text-primary);
+    border-radius: 50%;
+    transform: translateX(0);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    line-height: 24px;
+    text-align: center;
+    font-size: 0px; /* Hide text, just use as a circle */
+}
+
+[data-theme="dark"] .theme-toggle .icon {
+    transform: translateX(30px);
+}
+
+/* --- Layout & Sections --- */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4vw;
+    position: relative;
+    z-index: 10;
+}
+
+.section {
+    position: relative;
+    min-height: 60vh;
+    padding: var(--spacing-xl) 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* --- Typography System --- */
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.italic {
+    font-style: italic;
+    font-weight: 300;
+}
+
+.subtitle {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 2rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.huge-title {
+    font-size: clamp(4rem, 13vw, 14rem);
+    letter-spacing: -0.04em;
+    line-height: 0.85;
+    text-transform: uppercase;
+    font-family: var(--font-heading);
+}
+
+/* Text Splitting Setup for GSAP */
+.line {
+    overflow: hidden;
+    display: block;
+    padding-bottom: 1rem; /* prevent cutoff of descenders */
+}
+
+.line .word {
+    display: inline-block;
+    transform: translateY(110%);
+    will-change: transform;
+}
+
+.section-heading {
+    font-size: clamp(3rem, 8vw, 8rem);
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.section-heading::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background-color: var(--text-muted);
+    margin-top: 1.5rem;
+    transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.section-heading:hover::after {
+    width: 120px;
+    background-color: var(--accent);
+}
+
+.text-center { text-align: center; }
+.text-center::after { margin: 1.5rem auto 0; }
+
+.center-align {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+
+/* --- Specific Sections --- */
+
+/* 1. Intro / Fuji */
+.fuji-parallax-wrapper {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.8;
+}
+
+.fuji-path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawPath 4s ease-out forwards;
+}
+
+@keyframes drawPath {
+    to { stroke-dashoffset: 0; }
+}
+
+.fuji-path-glow {
+    filter: drop-shadow(0 0 15px rgba(150, 160, 170, 0.4));
+}
+
+.fuji-lines {
+    width: 100%;
+    height: 80%;
+}
+
+.scroll-down {
+    position: absolute;
+    bottom: 5vh;
+    left: 4vw;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.line-indicator {
+    width: 40px;
+    height: 1px;
+    background: var(--text-muted);
+    position: relative;
+    overflow: hidden;
+}
+
+.line-indicator::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%; width: 100%;
+    background: var(--text-primary);
+    transform: translateX(-100%);
+    animation: lineProgress 2s ease-in-out infinite;
+}
+@keyframes lineProgress {
+    0% { transform: translateX(-100%); }
+    50%, 100% { transform: translateX(100%); }
+}
+
+/* 2. Summary / Koi */
+.summary-content {
+    position: relative;
+    z-index: 2;
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 6vw;
+    align-items: start;
+}
+
+.catchy-bg-blob {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(124, 139, 150, 0.1) 0%, rgba(124, 139, 150, 0) 70%);
+    border-radius: 50%;
+    filter: blur(60px);
+    z-index: 0;
+    pointer-events: none;
+    animation: floatingBlob 20s infinite alternate ease-in-out;
+}
+
+@keyframes floatingBlob {
+    from { transform: translate(-10%, -10%) scale(1); }
+    to { transform: translate(10%, 10%) scale(1.1); }
+}
+
+.summary-bg-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.academics-bg-svg {
+    opacity: 0.05;
+    transform: translate(-50%, -50%) rotate(5deg);
+}
+
+.koi-path-wrapper {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.text-block p {
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.skills-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.skills-list li {
+    padding: 0.5rem 1.5rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 50px;
+    font-size: 0.9rem;
+}
+
+/* 3. Milestones / Sakura */
+#sakura-canvas {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1; /* place above background, but below text (container is relative z10) */
+    opacity: 0.8;
+}
+
+.milestone-track {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-md) 0;
+}
+
+.milestone-line {
+    position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 1px;
+    background: rgba(0,0,0,0.1);
+    transform-origin: top;
+    transform: scaleY(0); /* animated by GSAP */
+}
+
+.milestone-item {
+    width: 45%;
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    opacity: 0; /* animated by GSAP */
+}
+
+.milestone-item.left { text-align: right; margin-right: auto; padding-right: 3rem; }
+.milestone-item.right { text-align: left; margin-left: auto; padding-left: 3rem; transform: translateY(50%); }
+
+.milestone-item .year {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* 4. Projects / Pond pattern (Horizontal Scroll) */
+.horizontal-scroll-container {
+    overflow: hidden;
+}
+
+.horizontal-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.horizontal-slider {
+    display: flex;
+    gap: 4vw;
+    padding-left: 4vw;
+    width: fit-content;
+}
+
+.project-slide {
+    width: 60vw;
+    max-width: 800px;
+    flex-shrink: 0;
+}
+
+.image-mask {
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    position: relative;
+    border-radius: 4px;
+}
+
+.abstract-visual {
+    width: 100%;
+    height: 100%;
+    transform: scale(1.1); /* Parallax allowance */
+}
+
+.project-info {
+    margin-top: 2rem;
+}
+
+.project-info h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Liquid Hover SVG Filter Interaction */
+.liquid-hover {
+    transition: filter 0.8s ease;
+}
+/* Triggered by JS GSAP on hover */
+
+/* 5. Marks / Moonlit Water & Aquarium */
+#aquarium-canvas {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.9;
+}
+
+.moon-wrapper {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.giant-moon {
+    width: 50vw;
+    height: 50vw;
+    max-width: 600px;
+    max-height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(240,245,250,0) 70%);
+    filter: blur(20px);
+    transform: translateY(100vh); /* Initial position for scroll trigger */
+}
+
+.elegant-table {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    font-size: 1.2rem;
+}
+
+.table-row.head {
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    padding-bottom: 1rem;
+}
+
+.grade { font-family: var(--font-heading); font-style: italic; }
+
+/* 6. Connect */
+.connect-section {
+    min-height: 80vh;
+}
+
+.massive-text {
+    font-family: var(--font-heading);
+    font-size: clamp(5rem, 15vw, 15rem);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    margin-bottom: 2rem;
+}
+
+.magnetic-buttons {
+    display: flex;
+    gap: 2rem;
+    margin-top: 3rem;
+    margin-bottom: var(--spacing-xl);
+}
+
+.mag-btn {
+    padding: 1.5rem 3rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.mag-btn.primary {
+    background: var(--text-primary);
+    color: var(--bg-color);
+}
+
+.mag-btn.secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.mag-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* --- Eyecatchy Enhancements --- */
+.mag-btn.eyecatchy {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    border: none;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.icon-left {
+    transition: transform 0.3s ease;
+}
+
+.mag-btn.eyecatchy:hover .icon-left {
+    transform: scale(1.2) rotate(-10deg);
+}
+
+/* Primary Eyecatchy (Send Message) */
+.mag-btn.primary.eyecatchy {
+    background: linear-gradient(135deg, #2a2a2a 0%, #000000 100%);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] .mag-btn.primary.eyecatchy {
+    background: linear-gradient(135deg, #f0f0f0 0%, #bcbcbc 100%);
+    color: #000;
+}
+
+.mag-btn.primary.eyecatchy:hover {
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    transform: translateY(-3px);
+}
+
+/* GitHub Variant */
+.mag-btn.github {
+    background: rgba(36, 41, 47, 0.1);
+    color: #24292f;
+    border: 1px solid rgba(36, 41, 47, 0.2);
+}
+
+[data-theme="dark"] .mag-btn.github {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mag-btn.github:hover {
+    background: #24292f;
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(36, 41, 47, 0.3);
+}
+
+/* LinkedIn Variant */
+.mag-btn.linkedin {
+    background: rgba(0, 119, 181, 0.1);
+    color: #0077b5;
+    border: 1px solid rgba(0, 119, 181, 0.2);
+}
+
+[data-theme="dark"] .mag-btn.linkedin {
+    background: rgba(0, 119, 181, 0.1);
+    color: #00a0dc;
+    border: 1px solid rgba(0, 119, 181, 0.3);
+}
+
+.mag-btn.linkedin:hover {
+    background: #0077b5;
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(0, 119, 181, 0.3);
+}
+
+/* Resume/Download Variant */
+.mag-btn.resume {
+    background: rgba(124, 139, 150, 0.1);
+    color: var(--accent);
+    border: 1px solid rgba(124, 139, 150, 0.2);
+}
+
+.mag-btn.resume:hover {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(124, 139, 150, 0.3);
+}
+
+.minimal-footer {
+    position: absolute;
+    bottom: 2rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Responsiveness */
+@media (max-width: 900px) {
+    .split-layout { grid-template-columns: 1fr; }
+    .milestone-item { width: 100%; text-align: left; padding: 0 0 0 2rem !important; transform: none !important; }
+    .milestone-item.right { margin-top: 2rem; }
+    .milestone-line { left: 0; }
+    .table-row { grid-template-columns: 1fr; gap: 0.5rem; padding: 1.5rem 0; }
+    .table-row.head { display: none; }
+    .magnetic-buttons { flex-direction: column; }
+}
