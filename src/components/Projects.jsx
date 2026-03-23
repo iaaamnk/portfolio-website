@@ -1,32 +1,47 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import gsap from 'gsap';
 
 const Projects = () => {
   const containerRef = React.useRef(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useLayoutEffect(() => {
+    const checkTouch = () => {
+      const hasCoarsePointer = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      setIsTouchDevice(hasCoarsePointer);
+    };
+    
+    checkTouch();
+    
+    const mediaQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
+    const handleChange = (e) => setIsTouchDevice(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
 
   useLayoutEffect(() => {
     const listeners = [];
     let ctx = gsap.context(() => {
-      gsap.from('.reveal-heading', {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%'
-        },
-        y: 50, opacity: 0, duration: 1.2, ease: 'power3.out'
-      });
-
-      const horizontalSlider = containerRef.current.querySelector('.horizontal-slider');
-
+      const horizontalSlider = containerRef.current?.querySelector('.horizontal-slider');
+      
+      if (!horizontalSlider) return;
+      
       const getScrollDistance = () => {
-        if (!horizontalSlider) return 0;
-        // Use the pinned section's visible width (not `window.innerWidth`) since pinning depends on layout.
-        // Clamp to avoid `end: "+=0"` edge cases that can cause pin start glitches.
         const visibleWidth = containerRef.current?.clientWidth ?? window.innerWidth;
         const raw = horizontalSlider.scrollWidth - visibleWidth;
         return Math.max(1, raw);
       };
       
-      if (horizontalSlider) {
+      if (!isTouchDevice) {
+        gsap.from('.reveal-heading', {
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 80%'
+          },
+          y: 50, opacity: 0, duration: 1.2, ease: 'power3.out'
+        });
+        
         gsap.to(horizontalSlider, {
           x: () => -getScrollDistance(),
           ease: "none",
@@ -56,6 +71,22 @@ const Projects = () => {
             }
           });
         });
+      } else {
+        gsap.from('.reveal-heading', {
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top 80%'
+          },
+          y: 30, opacity: 0, duration: 0.8, ease: 'power3.out'
+        });
+        
+        gsap.from('.project-slide', {
+          scrollTrigger: {
+            trigger: '.horizontal-slider',
+            start: 'top 80%'
+          },
+          y: 40, opacity: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out'
+        });
       }
 
       containerRef.current.querySelectorAll('.liquid-hover').forEach((el) => {
@@ -69,13 +100,12 @@ const Projects = () => {
 
     return () => {
       ctx.revert();
-      // Prevent duplicate mouse handlers across React StrictMode re-mounts.
       listeners.forEach(({ el, enter, leave }) => {
         el.removeEventListener('mouseenter', enter);
         el.removeEventListener('mouseleave', leave);
       });
     };
-  }, []);
+  }, [isTouchDevice]);
 
   const projectData = [
     {
@@ -101,15 +131,15 @@ const Projects = () => {
         <h2 className="section-heading reveal-heading">Featured Features</h2>
       </div>
       
-      <div className="horizontal-slider" style={{ alignItems: 'center' }}>
+      <div className="horizontal-slider">
         {projectData.map((project) => (
-          <div key={project.id} className="project-slide" style={{ position: 'relative', width: '85vw', height: '60vh', padding: '0 5vw', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div key={project.id} className="project-slide">
             <h3 style={{ 
               position: 'absolute', 
               top: '5%', 
-              left: '2vw', 
+              left: '5%', 
               zIndex: 10, 
-              fontSize: 'clamp(2.5rem, 5vw, 5rem)', 
+              fontSize: 'clamp(2rem, 5vw, 4rem)', 
               textTransform: 'uppercase',
               color: 'var(--text-muted)',
               mixBlendMode: 'normal', 
@@ -121,30 +151,27 @@ const Projects = () => {
               {project.shortTitle}
             </h3>
             
-            <div className="image-mask liquid-hover hover-target" style={{ height: '50vh', width: '100%', borderRadius: '0', overflow: 'hidden' }}>
+            <div className="image-mask liquid-hover hover-target">
               <div 
                 className="abstract-visual" 
                 style={{ 
                   background: project.gradient, 
-                  height: '100%',
-                  width: '120%', 
-                  transform: 'translateX(-10%)',
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center', 
                   fontFamily: 'var(--font-heading)', 
                   fontStyle: 'italic', 
                   color: 'rgba(255,255,255,0.15)', 
-                  fontSize: '5rem' 
+                  fontSize: 'clamp(3rem, 8vw, 5rem)'
                 }}
               >
                 {project.id}
               </div>
             </div>
             
-            <div className="project-info" style={{ marginTop: '1.5rem', maxWidth: '600px', alignSelf: 'flex-end', textAlign: 'right' }}>
-              <h4 style={{ fontSize: '1.2rem', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{project.title.split('|')[1]?.trim() || project.title}</h4>
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>{project.tech}</p>
+            <div className="project-info">
+              <h4 style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{project.title.split('|')[1]?.trim() || project.title}</h4>
+              <p style={{ fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', color: 'var(--text-muted)', lineHeight: 1.5 }}>{project.tech}</p>
             </div>
           </div>
         ))}
