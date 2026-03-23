@@ -1,11 +1,12 @@
-import React, { useLayoutEffect, useState, useEffect } from 'react';
+import React, { useLayoutEffect, useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { Github, Linkedin, Send, Download } from 'lucide-react';
+import { Github, Linkedin, Send, Download, Check, AlertCircle } from 'lucide-react';
 
 const Connect = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState('idle');
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     const checkTouch = () => {
@@ -73,13 +74,30 @@ const Connect = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setFormStatus('submitting');
+    
     const subject = `Message from ${formData.name}`;
     const body = `${formData.message}\n\nFrom: ${formData.email}`;
-    window.location.href = `mailto:anamikavinesh12@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailtoLink = `mailto:anamikavinesh12@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    const mailtoLinkElement = document.createElement('a');
+    mailtoLinkElement.href = mailtoLink;
+    mailtoLinkElement.click();
+    
     setTimeout(() => {
-      setIsSubmitting(false);
-    }, 1000);
+      setFormStatus('success');
+      setTimeout(() => {
+        setFormStatus('idle');
+        setFormData({ name: '', email: '', message: '' });
+      }, 3000);
+    }, 500);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (value.length <= 500) {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   return (
@@ -94,65 +112,119 @@ const Connect = () => {
         
         <div>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <input 
-              type="text" 
-              placeholder="YOUR NAME" 
-              required 
-              value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
-              style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', textTransform: 'uppercase' }}
-            />
-            <input 
-              type="email" 
-              placeholder="YOUR EMAIL" 
-              required 
-              value={formData.email}
-              onChange={(e) => setFormData({...formData, email: e.target.value})}
-              style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', textTransform: 'uppercase' }}
-            />
-            <textarea 
-              placeholder="YOUR MESSAGE" 
-              required
-              value={formData.message}
-              onChange={(e) => setFormData({...formData, message: e.target.value})}
-              style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', minHeight: '100px', textTransform: 'uppercase', resize: 'vertical' }}
-            ></textarea>
-            <button type="submit" className="brutalist-mag-btn submit-btn hover-target" disabled={isSubmitting} style={{ 
-              alignSelf: 'flex-start', 
-              background: 'var(--text-primary)', 
-              color: 'var(--bg-color)', 
-              border: 'none', 
-              padding: '1rem 2rem', 
-              fontSize: '1rem', 
-              fontWeight: 600, 
-              textTransform: 'uppercase', 
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.8rem',
-              borderRadius: '100px'
-            }}>
-              {isSubmitting ? 'Sending...' : <><Send size={20} /> Send</>}
+            <div className="form-group">
+              <label htmlFor="name" className="sr-only">Your Name</label>
+              <input 
+                id="name"
+                type="text" 
+                name="name"
+                placeholder="YOUR NAME" 
+                required 
+                value={formData.name}
+                onChange={handleChange}
+                aria-describedby="name-hint"
+                style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', textTransform: 'uppercase', width: '100%' }}
+              />
+              <span id="name-hint" className="sr-only">Enter your full name</span>
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="email" className="sr-only">Your Email</label>
+              <input 
+                id="email"
+                type="email" 
+                name="email"
+                placeholder="YOUR EMAIL" 
+                required 
+                value={formData.email}
+                onChange={handleChange}
+                aria-describedby="email-hint"
+                style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', textTransform: 'uppercase', width: '100%' }}
+              />
+              <span id="email-hint" className="sr-only">Enter your email address</span>
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="message" className="sr-only">Your Message</label>
+              <textarea 
+                id="message"
+                name="message"
+                placeholder="YOUR MESSAGE" 
+                required
+                value={formData.message}
+                onChange={handleChange}
+                aria-describedby="message-hint message-count"
+                style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', minHeight: '100px', textTransform: 'uppercase', resize: 'vertical', width: '100%' }}
+              ></textarea>
+              <span id="message-hint" className="sr-only">Enter your message (max 500 characters)</span>
+              <span id="message-count" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'right', marginTop: '0.25rem' }}>
+                {formData.message.length}/500
+              </span>
+            </div>
+
+            {formStatus === 'success' && (
+              <div role="alert" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent)', fontSize: '0.9rem' }}>
+                <Check size={18} />
+                <span>Opening email client...</span>
+              </div>
+            )}
+            
+            {formStatus === 'error' && (
+              <div role="alert" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#e74c3c', fontSize: '0.9rem' }}>
+                <AlertCircle size={18} />
+                <span>Something went wrong. Please try again.</span>
+              </div>
+            )}
+            
+            <button 
+              type="submit" 
+              className="brutalist-mag-btn submit-btn hover-target" 
+              disabled={formStatus === 'submitting'}
+              style={{ 
+                alignSelf: 'flex-start', 
+                background: 'var(--text-primary)', 
+                color: 'var(--bg-color)', 
+                border: 'none', 
+                padding: '1rem 2rem', 
+                fontSize: '1rem', 
+                fontWeight: 600, 
+                textTransform: 'uppercase', 
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.8rem',
+                borderRadius: '100px',
+                opacity: formStatus === 'submitting' ? 0.7 : 1,
+                transition: 'opacity 0.2s ease'
+              }}
+            >
+              {formStatus === 'submitting' ? (
+                <>Opening...</>
+              ) : (
+                <><Send size={20} /> Send</>
+              )}
             </button>
           </form>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', alignItems: 'flex-start' }}>
-          <a href="/Anamika_Vinesh_Resume.pdf" download className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-            <Download size={24} /> Resume
+          <a href="/Anamika_Vinesh_Resume.pdf" download className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }} aria-label="Download Resume PDF">
+            <Download size={24} aria-hidden="true" /> Resume
           </a>
-          <a href="https://github.com/iaaamnk" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-            <Github size={24} /> Github
+          <a href="https://github.com/iaaamnk" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }} aria-label="Visit GitHub Profile (opens in new tab)">
+            <Github size={24} aria-hidden="true" /> Github
           </a>
-          <a href="http://www.linkedin.com/in/iaaamnk" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-            <Linkedin size={24} /> LinkedIn
+          <a href="http://www.linkedin.com/in/iaaamnk" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }} aria-label="Visit LinkedIn Profile (opens in new tab)">
+            <Linkedin size={24} aria-hidden="true" /> LinkedIn
           </a>
         </div>
       </div>
       
-      <footer style={{ marginTop: '5vh', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-muted)' }}>
-        <p style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>© 2026 Anamika Vinesh</p>
-        <a href="mailto:anamikavinesh12@gmail.com" className="footer-link hover-target" style={{ fontStyle: 'italic', fontFamily: 'var(--font-heading)', color: 'var(--text-muted)', textDecoration: 'none' }}>Built with ML Mastery.</a>
+      <footer style={{ marginTop: '5vh', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-muted)', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <p style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>© {currentYear} Anamika Vinesh</p>
+        <a href="mailto:anamikavinesh12@gmail.com" className="footer-link hover-target" style={{ fontStyle: 'italic', fontFamily: 'var(--font-heading)', color: 'var(--text-muted)', textDecoration: 'none' }}>
+          Built with ML Mastery.
+        </a>
       </footer>
     </section>
   );

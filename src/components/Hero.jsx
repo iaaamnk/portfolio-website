@@ -1,8 +1,10 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import gsap from 'gsap';
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 
 const Hero = () => {
+  const [imageError, setImageError] = useState(false);
+  
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
       const tl = gsap.timeline();
@@ -30,6 +32,10 @@ const Hero = () => {
     return () => ctx.revert();
   }, []);
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <section className="section" id="introduction" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
       <div className="container" style={{ zIndex: 2, position: 'relative', width: '100%' }}>
@@ -37,7 +43,7 @@ const Hero = () => {
           
           <div className="hero-content-left" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             
-            <p className="hero-sub-label" style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+            <p className="hero-sub-label" style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
               Software Engineer
             </p>
             
@@ -46,7 +52,7 @@ const Hero = () => {
                 Hello I'm
               </h1>
               
-              <div className="hero-main-title" style={{ display: 'inline-block', position: 'relative', width: 'fit-content' }}>
+              <div className="hero-main-title" style={{ display: 'inline-block', position: 'relative', width: 'fit-content', maxWidth: '100%' }}>
                 <div style={{
                   position: 'absolute',
                   top: '-10%',
@@ -56,13 +62,13 @@ const Hero = () => {
                   backgroundColor: 'var(--accent)',
                   zIndex: -1
                 }}></div>
-                <h1 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', lineHeight: 1, fontWeight: 700, fontFamily: 'var(--font-body)', color: 'var(--text-primary)', letterSpacing: '-0.02em', display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
-                  <span>Anamika</span> <span>Vinesh</span>
+                <h1 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', lineHeight: 1, fontWeight: 700, fontFamily: 'var(--font-body)', color: 'var(--text-primary)', letterSpacing: '-0.02em', display: 'flex', flexWrap: 'wrap', gap: '0.8rem', maxWidth: '100%' }}>
+                  <span style={{ wordBreak: 'break-word' }}>Anamika</span> <span style={{ wordBreak: 'break-word' }}>Vinesh</span>
                 </h1>
               </div>
             </div>
 
-            <p className="hero-desc" style={{ fontSize: '0.95rem', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '400px', margin: '0.5rem 0', fontFamily: 'var(--font-body)' }}>
+            <p className="hero-desc" style={{ fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '400px', margin: '0.5rem 0', fontFamily: 'var(--font-body)' }}>
               Machine Learning Developer & CS Undergrad<br/>
               Predictive Analytics | Computer Vision<br/>
               India
@@ -79,35 +85,35 @@ const Hero = () => {
                 color: 'var(--accent)',
                 textDecoration: 'none',
                 fontFamily: 'var(--font-body)',
-                fontSize: '0.85rem',
+                fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)',
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
                 transition: 'all 0.3s ease'
               }}>
-                View CV <ArrowRight size={14} />
+                View CV <ArrowRight size={14} aria-hidden="true" />
               </a>
               
               <div style={{ display: 'flex', gap: '0.8rem' }}>
-                <a href="https://github.com/iaaamnk" target="_blank" rel="noreferrer" className="hero-social-btn hover-target" style={{
+                <a href="https://github.com/iaaamnk" target="_blank" rel="noopener noreferrer" className="hero-social-btn hover-target" style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: '38px', height: '38px', border: '1px solid var(--accent)', borderRadius: '50%',
                   color: 'var(--accent)', transition: 'all 0.3s ease'
-                }}>
-                  <Github size={18} />
+                }} aria-label="GitHub Profile (opens in new tab)">
+                  <Github size={18} aria-hidden="true" />
                 </a>
-                <a href="http://www.linkedin.com/in/iaaamnk" target="_blank" rel="noreferrer" className="hero-social-btn hover-target" style={{
+                <a href="http://www.linkedin.com/in/iaaamnk" target="_blank" rel="noopener noreferrer" className="hero-social-btn hover-target" style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: '38px', height: '38px', border: '1px solid var(--accent)', borderRadius: '50%',
                   color: 'var(--accent)', transition: 'all 0.3s ease'
-                }}>
-                  <Linkedin size={18} />
+                }} aria-label="LinkedIn Profile (opens in new tab)">
+                  <Linkedin size={18} aria-hidden="true" />
                 </a>
                 <a href="#connect" className="hero-social-btn hover-target" style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: '38px', height: '38px', border: '1px solid var(--accent)', borderRadius: '50%',
                   color: 'var(--accent)', transition: 'all 0.3s ease'
-                }}>
-                  <Mail size={18} />
+                }} aria-label="Send Email">
+                  <Mail size={18} aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -117,12 +123,12 @@ const Hero = () => {
           <div className="hero-content-right" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
             <div className="hero-avatar-wrapper" style={{ position: 'relative', width: 'clamp(150px, 25vw, 280px)', aspectRatio: '1/1' }}>
               
-              <svg className="avatar-orbit" viewBox="0 0 100 100" style={{ position: 'absolute', top: '-10%', left: '-10%', width: '120%', height: '120%', zIndex: 1 }}>
+              <svg className="avatar-orbit" viewBox="0 0 100 100" style={{ position: 'absolute', top: '-10%', left: '-10%', width: '120%', height: '120%', zIndex: 1 }} aria-hidden="true">
                 <circle cx="50" cy="50" r="48" fill="none" stroke="var(--accent)" strokeWidth="0.5" strokeDasharray="10 5" opacity="0.6" />
                 <circle cx="50" cy="50" r="48" fill="none" stroke="var(--accent)" strokeWidth="1" strokeDasharray="30 20" strokeDashoffset="15" />
               </svg>
 
-              <svg className="avatar-orbit-reverse" viewBox="0 0 100 100" style={{ position: 'absolute', top: '-5%', left: '-5%', width: '110%', height: '110%', zIndex: 1 }}>
+              <svg className="avatar-orbit-reverse" viewBox="0 0 100 100" style={{ position: 'absolute', top: '-5%', left: '-5%', width: '110%', height: '110%', zIndex: 1 }} aria-hidden="true">
                 <circle cx="50" cy="50" r="48" fill="none" stroke="var(--accent)" strokeWidth="0.3" strokeDasharray="5 15" opacity="0.8" />
               </svg>
 
@@ -133,9 +139,28 @@ const Hero = () => {
                 position: 'relative',
                 zIndex: 2,
                 boxShadow: '0 0 30px rgba(0,0,0,0.3)',
-                backgroundColor: 'var(--bg-color)'
+                backgroundColor: 'var(--card-bg)'
               }}>
-                <img src="/cat_avatar.png" alt="Anamika Vinesh" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                {imageError ? (
+                  <div style={{ 
+                    width: '100%', height: '100%', 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    background: 'linear-gradient(135deg, var(--accent), var(--text-muted))',
+                    color: 'var(--bg-color)',
+                    fontSize: 'clamp(2rem, 5vw, 4rem)',
+                    fontFamily: 'var(--font-heading)',
+                    fontStyle: 'italic'
+                  }}>
+                    AV
+                  </div>
+                ) : (
+                  <img 
+                    src="/cat_avatar.png" 
+                    alt="Anamika Vinesh" 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={handleImageError}
+                  />
+                )}
                 
                 <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle, transparent 60%, rgba(0,0,0,0.4) 100%)', mixBlendMode: 'multiply' }}></div>
               </div>

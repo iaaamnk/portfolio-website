@@ -126,14 +126,14 @@ const Projects = () => {
 
   return (
     <section className="section projects-section" id="projects" ref={containerRef}>
-      <div className="projects-accent-bar"></div>
+      <div className="projects-accent-bar" aria-hidden="true"></div>
       <div className="container horizontal-header">
         <h2 className="section-heading reveal-heading">Featured Features</h2>
       </div>
       
-      <div className="horizontal-slider">
+      <div className="horizontal-slider" role="list" aria-label="Project showcase">
         {projectData.map((project) => (
-          <div key={project.id} className="project-slide">
+          <article key={project.id} className="project-slide" role="listitem">
             <h3 style={{ 
               position: 'absolute', 
               top: '5%', 
@@ -146,7 +146,11 @@ const Projects = () => {
               lineHeight: 0.9,
               letterSpacing: '-0.02em',
               pointerEvents: 'none',
-              opacity: 0.5
+              opacity: 0.5,
+              maxWidth: '90%',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
             }}>
               {project.shortTitle}
             </h3>
@@ -170,10 +174,36 @@ const Projects = () => {
             </div>
             
             <div className="project-info">
-              <h4 style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{project.title.split('|')[1]?.trim() || project.title}</h4>
-              <p style={{ fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', color: 'var(--text-muted)', lineHeight: 1.5 }}>{project.tech}</p>
+              <h4 
+                style={{ 
+                  fontSize: 'clamp(1rem, 2vw, 1.2rem)', 
+                  marginBottom: '0.8rem', 
+                  color: 'var(--text-primary)',
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 1,
+                  WebkitBoxOrient: 'vertical',
+                  lineClamp: 1
+                }}
+              >
+                {project.title.split('|')[1]?.trim() || project.title}
+              </h4>
+              <p 
+                style={{ 
+                  fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', 
+                  color: 'var(--text-muted)', 
+                  lineHeight: 1.5,
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical',
+                  lineClamp: 3
+                }}
+              >
+                {project.tech}
+              </p>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </section>
