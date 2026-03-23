@@ -31,7 +31,6 @@ const Connect = () => {
         ease: "power3.out"
       });
 
-      // Refined Magnetic pull effect
       document.querySelectorAll('.brutalist-mag-btn').forEach(el => {
         el.addEventListener('mousemove', (e) => {
           const rect = el.getBoundingClientRect();
@@ -66,7 +65,7 @@ const Connect = () => {
   };
 
   return (
-    <section className="section connect-section" id="connect" style={{ backgroundColor: 'var(--text-primary)', color: 'var(--bg-color)', minHeight: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '4vh 5vw' }}>
+    <section className="section connect-section" id="connect" style={{ minHeight: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '4vh 5vw' }}>
       
       <div style={{ marginTop: '5vh' }}>
         <h2 className="massive-connect-text" style={{ fontSize: 'clamp(2.5rem, 8vw, 6rem)', textTransform: 'uppercase', lineHeight: 0.9, letterSpacing: '-0.03em', margin: 0 }}>Let's</h2>
@@ -75,7 +74,6 @@ const Connect = () => {
 
       <div className="brutalist-contact-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem', marginTop: '6vh' }}>
         
-        {/* Form */}
         <div>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <input 
@@ -84,7 +82,7 @@ const Connect = () => {
               required 
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              style={{ background: 'transparent', border: 'none', borderBottom: '2px solid rgba(255,255,255,0.2)', color: 'var(--bg-color)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', textTransform: 'uppercase' }}
+              style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', textTransform: 'uppercase' }}
             />
             <input 
               type="email" 
@@ -92,19 +90,19 @@ const Connect = () => {
               required 
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
-              style={{ background: 'transparent', border: 'none', borderBottom: '2px solid rgba(255,255,255,0.2)', color: 'var(--bg-color)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', textTransform: 'uppercase' }}
+              style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', textTransform: 'uppercase' }}
             />
             <textarea 
               placeholder="YOUR MESSAGE" 
               required
               value={formData.message}
               onChange={(e) => setFormData({...formData, message: e.target.value})}
-              style={{ background: 'transparent', border: 'none', borderBottom: '2px solid rgba(255,255,255,0.2)', color: 'var(--bg-color)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', minHeight: '100px', textTransform: 'uppercase', resize: 'vertical' }}
+              style={{ background: 'transparent', border: 'none', borderBottom: '2px solid var(--border-color)', color: 'var(--text-primary)', fontSize: '1.1rem', padding: '0.8rem 0', outline: 'none', minHeight: '100px', textTransform: 'uppercase', resize: 'vertical' }}
             ></textarea>
             <button type="submit" className="brutalist-mag-btn hover-target" disabled={isSubmitting} style={{ 
               alignSelf: 'flex-start', 
-              background: 'var(--bg-color)', 
-              color: 'var(--text-primary)', 
+              background: 'var(--text-primary)', 
+              color: 'var(--bg-color)', 
               border: 'none', 
               padding: '1rem 2rem', 
               fontSize: '1rem', 
@@ -121,21 +119,20 @@ const Connect = () => {
           </form>
         </div>
 
-        {/* Links */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', alignItems: 'flex-start' }}>
-          <a href="/Anamika_Vinesh_Resume.pdf" download className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--bg-color)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+          <a href="/Anamika_Vinesh_Resume.pdf" download className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
             <Download size={24} /> Resume
           </a>
-          <a href="https://github.com/iaaamnk" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--bg-color)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+          <a href="https://github.com/iaaamnk" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
             <Github size={24} /> Github
           </a>
-          <a href="http://www.linkedin.com/in/iaaamnk" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--bg-color)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+          <a href="http://www.linkedin.com/in/iaaamnk" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
             <Linkedin size={24} /> LinkedIn
           </a>
         </div>
       </div>
       
-      <footer style={{ marginTop: '5vh', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.5)' }}>
+      <footer style={{ marginTop: '5vh', borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-muted)' }}>
         <p style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>© 2026 Anamika Vinesh</p>
         <p style={{ fontStyle: 'italic', fontFamily: 'var(--font-heading)' }}>Built with ML Mastery.</p>
       </footer>

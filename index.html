@@ -14,12 +14,12 @@
   <body>
     <!-- Global SVG Filters -->
     <svg style="display:none;">
-        <defs>
-            <filter id="liquid-filter">
-                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="35" xChannelSelector="R" yChannelSelector="G" />
-            </filter>
-        </defs>
+      <defs>
+        <filter id="liquid-filter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="35" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
     </svg>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

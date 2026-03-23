@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
@@ -7,7 +7,6 @@ import Lenis from '@studio-freight/lenis';
 // Components
 import Cursor from './components/Cursor';
 import ThemeToggle from './components/ThemeToggle';
-import Atmosphere from './components/Atmosphere';
 import Hero from './components/Hero';
 import Summary from './components/Summary';
 import Milestones from './components/Milestones';
@@ -36,7 +35,6 @@ function App() {
     };
     const rafId = requestAnimationFrame(raf);
 
-    // Refresh ScrollTrigger after a short delay to ensure React has rendered everything
     const refreshTimeout = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 100);
@@ -61,15 +59,14 @@ function App() {
     <div className="app-container">
       <Cursor />
       <ThemeToggle isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-      <Atmosphere isDarkMode={isDarkMode} />
 
       <div className="smooth-wrapper">
         <main className="smooth-content">
           <Hero />
           <Summary />
-          <Milestones isDarkMode={isDarkMode} />
+          <Milestones />
           <Projects />
-          <Academics isDarkMode={isDarkMode} />
+          <Academics />
           <Connect />
         </main>
       </div>

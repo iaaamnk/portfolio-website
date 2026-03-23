@@ -42,12 +42,11 @@ const Summary = () => {
 
   return (
     <section className="section" id="summary">
-      <div className="catchy-bg-blob" style={{ top: '10%', left: '-10%' }}></div>
-      <svg className="summary-bg-svg" viewBox="0 0 800 800">
+      <svg className="summary-bg-svg" viewBox="0 0 800 800" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}>
         <path d="M-50 400 Q250 100 550 400" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.2" />
       </svg>
       
-      <div className="summary-content container">
+      <div className="summary-content container" style={{ position: 'relative', zIndex: 1 }}>
         <div className="summary-header">
           <h2 className="section-heading reveal-heading" style={{ marginBottom: '2rem' }}>Summary</h2>
           <div className="text-block">

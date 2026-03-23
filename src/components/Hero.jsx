@@ -32,33 +32,12 @@ const Hero = () => {
 
   return (
     <section className="section" id="introduction" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative', overflow: 'hidden' }}>
-      {/* Grid Background Pattern */}
-      <div style={{
-        position: 'absolute',
-        top: 0, left: 0, width: '100%', height: '100%',
-        backgroundImage: 'linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)',
-        backgroundSize: '50px 50px',
-        opacity: 1,
-        zIndex: 0,
-        pointerEvents: 'none'
-      }}></div>
-
-      {/* Subtle depth gradient */}
-      <div style={{
-        position: 'absolute',
-        top: 0, left: 0, width: '100%', height: '100%',
-        background: 'radial-gradient(circle at 80% 50%, #B6CEB41A 0%, transparent 60%)',
-        zIndex: 0,
-        pointerEvents: 'none'
-      }}></div>
-      
       <div className="container" style={{ zIndex: 2, position: 'relative', width: '100%' }}>
         <div className="split-layout" style={{ alignItems: 'center', margin: '2rem 0' }}>
           
-          {/* Left Column: Typography & Actions */}
           <div className="hero-content-left" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             
-            <p className="hero-sub-label" style={{ fontFamily: 'monospace', fontSize: '0.9rem', letterSpacing: '0.1em', color: 'var(--text-muted)' }}>
+            <p className="hero-sub-label" style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
               Software Engineer
             </p>
             
@@ -83,7 +62,7 @@ const Hero = () => {
               </div>
             </div>
 
-            <p className="hero-desc" style={{ fontSize: '0.9rem', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '400px', margin: '0.5rem 0', fontFamily: 'monospace' }}>
+            <p className="hero-desc" style={{ fontSize: '0.95rem', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '400px', margin: '0.5rem 0', fontFamily: 'var(--font-body)' }}>
               Machine Learning Developer & CS Undergrad<br/>
               Predictive Analytics | Computer Vision<br/>
               India
@@ -99,12 +78,13 @@ const Hero = () => {
                 borderRadius: '50px',
                 color: 'var(--accent)',
                 textDecoration: 'none',
-                fontFamily: 'monospace',
+                fontFamily: 'var(--font-body)',
                 fontSize: '0.85rem',
                 letterSpacing: '0.1em',
+                textTransform: 'uppercase',
                 transition: 'all 0.3s ease'
               }}>
-                VIEW CV <ArrowRight size={14} />
+                View CV <ArrowRight size={14} />
               </a>
               
               <div style={{ display: 'flex', gap: '0.8rem' }}>
@@ -134,11 +114,9 @@ const Hero = () => {
             
           </div>
 
-          {/* Right Column: Avatar with Orbit */}
           <div className="hero-content-right" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
             <div className="hero-avatar-wrapper" style={{ position: 'relative', width: 'clamp(150px, 25vw, 280px)', aspectRatio: '1/1' }}>
               
-              {/* Spinning Orbit Rings */}
               <svg className="avatar-orbit" viewBox="0 0 100 100" style={{ position: 'absolute', top: '-10%', left: '-10%', width: '120%', height: '120%', zIndex: 1 }}>
                 <circle cx="50" cy="50" r="48" fill="none" stroke="var(--accent)" strokeWidth="0.5" strokeDasharray="10 5" opacity="0.6" />
                 <circle cx="50" cy="50" r="48" fill="none" stroke="var(--accent)" strokeWidth="1" strokeDasharray="30 20" strokeDashoffset="15" />
@@ -148,7 +126,6 @@ const Hero = () => {
                 <circle cx="50" cy="50" r="48" fill="none" stroke="var(--accent)" strokeWidth="0.3" strokeDasharray="5 15" opacity="0.8" />
               </svg>
 
-              {/* Avatar Image Container */}
               <div style={{
                 width: '100%', height: '100%',
                 borderRadius: '50%',
@@ -160,7 +137,6 @@ const Hero = () => {
               }}>
                 <img src="/cat_avatar.png" alt="Anamika Vinesh" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 
-                {/* Inner shadow/overlay for depth */}
                 <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle, transparent 60%, rgba(0,0,0,0.4) 100%)', mixBlendMode: 'multiply' }}></div>
               </div>
 

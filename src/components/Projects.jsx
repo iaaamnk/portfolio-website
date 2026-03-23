@@ -5,6 +5,7 @@ const Projects = () => {
   const containerRef = React.useRef(null);
 
   useLayoutEffect(() => {
+    const listeners = [];
     let ctx = gsap.context(() => {
       gsap.from('.reveal-heading', {
         scrollTrigger: {
@@ -15,22 +16,32 @@ const Projects = () => {
       });
 
       const horizontalSlider = containerRef.current.querySelector('.horizontal-slider');
-      let scrollTween;
+
+      const getScrollDistance = () => {
+        if (!horizontalSlider) return 0;
+        // Use the pinned section's visible width (not `window.innerWidth`) since pinning depends on layout.
+        // Clamp to avoid `end: "+=0"` edge cases that can cause pin start glitches.
+        const visibleWidth = containerRef.current?.clientWidth ?? window.innerWidth;
+        const raw = horizontalSlider.scrollWidth - visibleWidth;
+        return Math.max(1, raw);
+      };
       
       if (horizontalSlider) {
-        scrollTween = gsap.to(horizontalSlider, {
-          x: () => -(horizontalSlider.scrollWidth - window.innerWidth),
+        gsap.to(horizontalSlider, {
+          x: () => -getScrollDistance(),
           ease: "none",
           scrollTrigger: {
             trigger: containerRef.current,
             pin: true,
+            pinType: 'transform',
             scrub: 1,
+            anticipatePin: 1,
+            start: 'top top',
             invalidateOnRefresh: true,
-            end: () => "+=" + (horizontalSlider.scrollWidth - window.innerWidth)
+            end: () => "+=" + getScrollDistance()
           }
         });
 
-        // Internal Image Parallax
         const images = gsap.utils.toArray('.abstract-visual', containerRef.current);
         images.forEach((img) => {
           gsap.to(img, {
@@ -39,22 +50,31 @@ const Projects = () => {
             scrollTrigger: {
               trigger: containerRef.current,
               start: "top top",
-              end: () => "+=" + (horizontalSlider.scrollWidth - window.innerWidth),
+              end: () => "+=" + getScrollDistance(),
               scrub: true,
+              invalidateOnRefresh: true
             }
           });
         });
       }
 
-      containerRef.current.querySelectorAll('.liquid-hover').forEach(el => {
-        const enter = () => el.style.filter = "url('#liquid-filter')";
-        const leave = () => el.style.filter = "none";
+      containerRef.current.querySelectorAll('.liquid-hover').forEach((el) => {
+        const enter = () => { el.style.filter = "url('#liquid-filter')"; };
+        const leave = () => { el.style.filter = "none"; };
         el.addEventListener('mouseenter', enter);
         el.addEventListener('mouseleave', leave);
+        listeners.push({ el, enter, leave });
       });
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      // Prevent duplicate mouse handlers across React StrictMode re-mounts.
+      listeners.forEach(({ el, enter, leave }) => {
+        el.removeEventListener('mouseenter', enter);
+        el.removeEventListener('mouseleave', leave);
+      });
+    };
   }, []);
 
   const projectData = [
@@ -75,9 +95,10 @@ const Projects = () => {
   ];
 
   return (
-    <section className="section horizontal-scroll-container" id="projects" ref={containerRef} style={{ background: 'var(--text-primary)', color: 'var(--bg-color)', paddingTop: '8vh' }}>
+    <section className="section projects-section" id="projects" ref={containerRef}>
+      <div className="projects-accent-bar"></div>
       <div className="container horizontal-header">
-        <h2 className="section-heading reveal-heading" style={{ color: 'var(--bg-color)', marginBottom: '3vh' }}>Featured Features</h2>
+        <h2 className="section-heading reveal-heading">Featured Features</h2>
       </div>
       
       <div className="horizontal-slider" style={{ alignItems: 'center' }}>
@@ -89,12 +110,13 @@ const Projects = () => {
               left: '2vw', 
               zIndex: 10, 
               fontSize: 'clamp(2.5rem, 5vw, 5rem)', 
-              textTransform: 'uppercase', 
-              mixBlendMode: 'difference', 
-              color: '#ffffff',
+              textTransform: 'uppercase',
+              color: 'var(--text-muted)',
+              mixBlendMode: 'normal', 
               lineHeight: 0.9,
               letterSpacing: '-0.02em',
-              pointerEvents: 'none'
+              pointerEvents: 'none',
+              opacity: 0.5
             }}>
               {project.shortTitle}
             </h3>
@@ -112,7 +134,7 @@ const Projects = () => {
                   justifyContent: 'center', 
                   fontFamily: 'var(--font-heading)', 
                   fontStyle: 'italic', 
-                  color: 'rgba(255,255,255,0.1)', 
+                  color: 'rgba(255,255,255,0.15)', 
                   fontSize: '5rem' 
                 }}
               >
@@ -121,8 +143,8 @@ const Projects = () => {
             </div>
             
             <div className="project-info" style={{ marginTop: '1.5rem', maxWidth: '600px', alignSelf: 'flex-end', textAlign: 'right' }}>
-              <h4 style={{ fontSize: '1.2rem', marginBottom: '0.8rem', color: 'var(--bg-color)' }}>{project.title.split('|')[1]?.trim() || project.title}</h4>
-              <p style={{ fontSize: '0.95rem', color: 'rgba(255,255,255,0.6)', lineHeight: '1.5' }}>{project.tech}</p>
+              <h4 style={{ fontSize: '1.2rem', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{project.title.split('|')[1]?.trim() || project.title}</h4>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>{project.tech}</p>
             </div>
           </div>
         ))}
