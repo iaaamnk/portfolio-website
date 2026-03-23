@@ -4,17 +4,15 @@ import gsap from 'gsap';
 const Milestones = () => {
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      gsap.from('.brutalist-card', {
+      gsap.to('.brutalist-card', {
         scrollTrigger: {
           trigger: '#milestones',
-          start: 'top 70%',
-          end: 'top 30%',
-          scrub: 1
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 2
         },
-        y: 100,
-        opacity: 0,
-        rotationX: 10,
-        transformPerspective: 1000
+        y: -50,
+        ease: 'none'
       });
     });
     return () => ctx.revert();
