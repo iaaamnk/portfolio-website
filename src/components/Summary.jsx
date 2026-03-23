@@ -1,10 +1,36 @@
 import React, { useLayoutEffect } from 'react';
 import gsap from 'gsap';
 
+const categories = [
+  {
+    title: 'Languages',
+    skills: ['C++(DSA)', 'Python', 'C', 'Java(OOP)'],
+    type: 'technical'
+  },
+  {
+    title: 'Technologies',
+    skills: ['Django', 'Node.js', 'Bootstrap', 'Flask'],
+    type: 'technical'
+  },
+  {
+    title: 'Tools/Platforms',
+    skills: ['Docker', 'Google Colab', 'RESTful APIs', 'Git'],
+    type: 'technical'
+  },
+  {
+    title: 'Machine Learning',
+    skills: ['NumPy', 'Pandas', 'TensorFlow', 'OpenCV', 'DeepFace', 'Scikit-learn', 'Keras'],
+    type: 'technical'
+  },
+  {
+    title: 'Soft Skills',
+    skills: ['Problem-Solving', 'Analytical Thinking', 'Adaptability', 'Time Management'],
+    type: 'soft'
+  }
+];
+
 const Summary = () => {
   const summaryText = "Anamika Vinesh is a Computer Science undergraduate specializing in Machine Learning and full-stack AI applications. Her work focuses on creating practical ML solutions, including real-time emotion recognition systems and AI-driven career recommendation platforms. She is passionate about building scalable, high-impact intelligent systems.";
-
-  const coreSkills = ['Python', 'C++', 'TensorFlow', 'Keras', 'OpenCV', 'DeepFace', 'Django', 'React', 'Docker', 'REST API'];
 
   useLayoutEffect(() => {
     gsap.from('#summary .reveal-heading', {
@@ -26,26 +52,10 @@ const Summary = () => {
       color: 'var(--text-primary)',
       stagger: 0.05
     });
-
-    gsap.from('.brutalist-skill-item', {
-      scrollTrigger: {
-        trigger: '.brutalist-skills',
-        start: 'top 80%'
-      },
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.05,
-      ease: 'back.out(1.7)'
-    });
   }, []);
 
   return (
     <section className="section" id="summary">
-      <svg className="summary-bg-svg" viewBox="0 0 800 800" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none' }}>
-        <path d="M-50 400 Q250 100 550 400" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.2" />
-      </svg>
-      
       <div className="summary-content container" style={{ position: 'relative', zIndex: 1 }}>
         <div className="summary-header">
           <h2 className="section-heading reveal-heading" style={{ marginBottom: '2rem' }}>Summary</h2>
@@ -57,20 +67,32 @@ const Summary = () => {
             </p>
           </div>
         </div>
-        
-        <div className="brutalist-skills" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--spacing-sm)', marginTop: 'var(--spacing-md)' }}>
-          <h3 style={{ width: '100%', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--accent)', marginBottom: '1rem' }}>Skills</h3>
-          {coreSkills.map(skill => (
-            <span key={skill} className="brutalist-skill-item hover-target" style={{ 
-              fontSize: 'clamp(1rem, 2.5vw, 2rem)', 
-              fontWeight: 500,
-              border: '2px solid var(--text-muted)', 
-              padding: 'var(--spacing-xs) var(--spacing-sm)', 
-              borderRadius: '200px',
-              transition: 'all 0.3s ease'
-            }}>
-              {skill}
-            </span>
+
+        <div className="skills-container">
+          <h3 className="skills-main-heading">Skills</h3>
+          
+          {categories.map((category, index) => (
+            <div key={index} className="skill-category">
+              <h4 className="skill-category-title">{category.title}</h4>
+              
+              {category.type === 'technical' ? (
+                <div className="skill-pills">
+                  {category.skills.map((skill) => (
+                    <span key={skill} className="skill-pill hover-target">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <div className="soft-skills">
+                  {category.skills.map((skill, i) => (
+                    <span key={skill}>
+                      {skill}{i < category.skills.length - 1 && <span className="soft-skill-separator"> · </span>}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
         </div>
       </div>

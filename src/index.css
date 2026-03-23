@@ -832,12 +832,6 @@ h1, h2, h3 {
         border-left-width: 3px;
     }
     
-    /* Skills Pills */
-    .brutalist-skill-item {
-        font-size: clamp(0.85rem, 3vw, 1.2rem) !important;
-        padding: 0.3rem 1rem;
-    }
-    
     /* Academics Grid */
     .academics-grid {
         grid-template-columns: 1fr;
@@ -1027,17 +1021,82 @@ h1, h2, h3 {
     transform: translate(-2px, -2px);
 }
 
-/* --- Skills Pills Hover --- */
-.brutalist-skill-item {
-    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
-                border-color 0.25s ease,
-                color 0.25s ease;
+/* --- Skills Container --- */
+.skills-container {
+    margin-top: var(--spacing-lg);
+    opacity: 1;
 }
 
-.brutalist-skill-item:hover {
-    transform: scale(1.05);
-    border-color: var(--accent) !important;
-    color: var(--accent) !important;
+.skills-main-heading {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-family: var(--font-heading);
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* --- Skill Category --- */
+.skill-category {
+    margin-bottom: var(--spacing-md);
+    opacity: 1;
+}
+
+.skill-category:last-child {
+    margin-bottom: 0;
+}
+
+.skill-category-title {
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* --- Skill Pills --- */
+.skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.skill-pill {
+    display: inline-block;
+    font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--text-primary);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.skill-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* --- Soft Skills --- */
+.soft-skills {
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    font-family: var(--font-body);
+    font-weight: 400;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+.soft-skill-separator {
+    color: var(--accent);
+    margin: 0 0.25rem;
 }
 
 /* --- Project Slide Hover --- */
@@ -1283,10 +1342,6 @@ a[target="_blank"]::after {
 
 [data-theme="dark"] .hero-social-btn {
     border-color: var(--text-primary);
-}
-
-[data-theme="dark"] .brutalist-skill-item {
-    border-color: var(--border-color);
 }
 
 [data-theme="dark"] .brutalist-card {
