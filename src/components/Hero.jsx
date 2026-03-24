@@ -9,8 +9,7 @@ const Hero = () => {
     let ctx = gsap.context(() => {
       const tl = gsap.timeline();
       
-      tl.from('.hero-sub-label', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' })
-        .from('.hero-main-title', { x: -50, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out' }, "-=0.4")
+      tl.from('.hero-main-title', { x: -50, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out' })
         .from('.hero-desc', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' }, "-=0.6")
         .from('.hero-actions', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' }, "-=0.6")
         .from('.hero-avatar-wrapper', { scale: 0.8, opacity: 0, duration: 1.5, ease: 'elastic.out(1, 0.5)' }, "-=1.2");
@@ -43,39 +42,63 @@ const Hero = () => {
           
           <div className="hero-content-left" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
             
-            <p className="hero-sub-label" style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-              Software Engineer
-            </p>
+            <div style={{ height: 'var(--spacing-md)' }}></div>
+
             
             <div className="hero-title-group" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xs)' }}>
-              <h1 className="hero-main-title" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', lineHeight: 1, fontWeight: 600, fontFamily: 'var(--font-body)' }}>
+              <h1 className="hero-main-title" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1, fontWeight: 600, fontFamily: 'var(--font-body)' }}>
                 Hi, I'm
               </h1>
               
               <div className="hero-main-title" style={{ display: 'inline-block', position: 'relative', width: 'fit-content', maxWidth: '100%' }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-10%',
-                  left: '-2%',
-                  width: 'calc(100% * 0.5)',
-                  height: '120%',
-                  backgroundColor: 'var(--accent)',
-                  zIndex: -1
-                }}></div>
-                <h1 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', lineHeight: 1, fontWeight: 700, fontFamily: 'var(--font-body)', color: 'var(--text-primary)', letterSpacing: '-0.02em', display: 'flex', flexWrap: 'wrap', gap: '0.8rem', maxWidth: '100%' }}>
-                  <span style={{ wordBreak: 'break-word' }}>Anamika</span> <span style={{ wordBreak: 'break-word' }}>Vinesh</span>
+                <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1, fontWeight: 700, fontFamily: 'var(--font-body)', color: 'var(--text-primary)', letterSpacing: '-0.02em', display: 'flex', flexWrap: 'wrap', gap: '0.8rem', maxWidth: '100%' }}>
+                  <span style={{ 
+                    wordBreak: 'break-word', 
+                    position: 'relative',
+                    zIndex: 1,
+                    display: 'inline-block',
+                    padding: '0 0.2rem'
+                  }}>
+                    Anamika
+                    <span style={{
+                      position: 'absolute',
+                      top: '-10%',
+                      left: '-2%',
+                      width: '104%',
+                      height: '115%',
+                      backgroundColor: 'var(--accent)',
+                      zIndex: -1
+                    }}></span>
+                  </span> 
+                  <span style={{ 
+                    wordBreak: 'break-word', 
+                    position: 'relative',
+                    zIndex: 1,
+                    display: 'inline-block',
+                    padding: '0 0.2rem'
+                  }}>
+                    Vinesh
+                    <span style={{
+                      position: 'absolute',
+                      top: '-10%',
+                      left: '-2%',
+                      width: '104%',
+                      height: '115%',
+                      backgroundColor: 'var(--accent)',
+                      zIndex: -1
+                    }}></span>
+                  </span>
                 </h1>
               </div>
             </div>
 
-            <p className="hero-desc" style={{ fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '400px', margin: 'var(--spacing-xs) 0', fontFamily: 'var(--font-body)' }}>
+            <p className="hero-desc" style={{ fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '400px', margin: 'var(--spacing-xs) 0', fontFamily: 'var(--font-body)' }}>
               ML Developer & CS Student<br/>
-              Predictive Analytics · Computer Vision<br/>
               India
             </p>
 
             <div className="hero-actions" style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', flexWrap: 'wrap' }}>
-              <a href="#connect" className="hero-btn-primary hover-target" style={{
+              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="hero-btn-primary hover-target" style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: 'var(--spacing-xs)',
@@ -101,7 +124,7 @@ const Hero = () => {
                 }} aria-label="GitHub Profile (opens in new tab)">
                   <Github size={18} aria-hidden="true" />
                 </a>
-                <a href="http://www.linkedin.com/in/iaaamnk" target="_blank" rel="noopener noreferrer" className="hero-social-btn hover-target" style={{
+                <a href="https://www.linkedin.com/in/iaaamnk/" target="_blank" rel="noopener noreferrer" className="hero-social-btn hover-target" style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: '38px', height: '38px', border: '1px solid var(--accent)', borderRadius: '50%',
                   color: 'var(--accent)', transition: 'all 0.3s ease'

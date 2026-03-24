@@ -49,18 +49,18 @@ const Projects = () => {
             trigger: containerRef.current,
             pin: true,
             pinType: 'transform',
-            scrub: 1,
+            scrub: 0.6,
             anticipatePin: 1,
             start: 'top top',
             invalidateOnRefresh: true,
-            end: () => "+=" + getScrollDistance()
+            end: () => "+=" + (getScrollDistance() * 1.5)
           }
         });
 
         const images = gsap.utils.toArray('.abstract-visual', containerRef.current);
         images.forEach((img) => {
           gsap.to(img, {
-            xPercent: 15,
+            scale: 1.05,
             ease: "none",
             scrollTrigger: {
               trigger: containerRef.current,
@@ -113,14 +113,16 @@ const Projects = () => {
       title: 'Emo.AI | Sentiment Analysis System',
       shortTitle: 'Emo.AI',
       tech: 'Python, Django, DeepFace, OpenCV, TensorFlow. Built a production-level emotion detection web app with 92%+ accuracy across 7 classes. REST API response time <300ms.',
-      gradient: 'linear-gradient(135deg, #2b2d42, #8d99ae)'
+      gradient: 'linear-gradient(135deg, #2b2d42, #8d99ae)',
+      image: '/projects/emo_ai_new.png'
     },
     {
       id: '02',
       title: 'PathFinder | Career Recommendation System',
       shortTitle: 'PathFinder',
       tech: 'Python, Flask, Random Forest, HTML, CSS, JavaScript. Built ML-based recommendation system using Random Forest (84% accuracy) on 1200+ users. Implemented Holland RIASEC model.',
-      gradient: 'linear-gradient(-135deg, #1d3557, #457b9d)'
+      gradient: 'linear-gradient(-135deg, #1d3557, #457b9d)',
+      image: '/projects/pathfinder_new.png'
     }
   ];
 
@@ -134,26 +136,6 @@ const Projects = () => {
       <div className="horizontal-slider" role="list" aria-label="Project showcase">
         {projectData.map((project) => (
           <article key={project.id} className="project-slide" role="listitem">
-            <h3 style={{ 
-              position: 'absolute', 
-              top: '5%', 
-              left: '5%', 
-              zIndex: 10, 
-              fontSize: 'clamp(2rem, 5vw, 4rem)', 
-              textTransform: 'uppercase',
-              color: 'var(--text-muted)',
-              mixBlendMode: 'normal', 
-              lineHeight: 0.9,
-              letterSpacing: '-0.02em',
-              pointerEvents: 'none',
-              opacity: 0.5,
-              maxWidth: '90%',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
-            }}>
-              {project.shortTitle}
-            </h3>
             
             <div className="image-mask liquid-hover hover-target">
               <div 
@@ -169,7 +151,20 @@ const Projects = () => {
                   fontSize: 'clamp(3rem, 8vw, 5rem)'
                 }}
               >
-                {project.id}
+                {project.image ? (
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover',
+                      opacity: 1
+                    }} 
+                  />
+                ) : (
+                  project.id
+                )}
               </div>
             </div>
             

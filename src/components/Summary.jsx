@@ -30,7 +30,7 @@ const categories = [
 ];
 
 const Summary = () => {
-  const summaryText = "Anamika Vinesh is a Computer Science undergraduate specializing in Machine Learning and full-stack AI applications. Her work focuses on creating practical ML solutions, including real-time emotion recognition systems and AI-driven career recommendation platforms. She is passionate about building scalable, high-impact intelligent systems.";
+  const summaryText = "I am a Computer Science undergraduate specializing in Machine Learning and full-stack AI applications. My work focuses on creating practical ML solutions, including real-time emotion recognition systems and AI-driven career recommendation platforms. I am passionate about building scalable, high-impact intelligent systems.";
 
   useLayoutEffect(() => {
     gsap.from('#summary .reveal-heading', {
@@ -60,9 +60,9 @@ const Summary = () => {
         <div className="summary-header">
           <h2 className="section-heading reveal-heading" style={{ marginBottom: '2rem' }}>Summary</h2>
           <div className="text-block">
-            <p className="scrub-text" style={{ fontWeight: 600, fontSize: 'clamp(1rem, 2vw, 1.8rem)', lineHeight: 1.4, maxWidth: '1200px' }}>
+            <p className="scrub-text" style={{ fontWeight: 400, fontSize: 'clamp(1rem, 2vw, 1.8rem)', lineHeight: 1.6, maxWidth: '1200px' }}>
               {summaryText.split(' ').map((word, i) => (
-                <span key={i} className="scrub-word" style={{ opacity: 0.2, color: 'var(--text-muted)' }}>{word} </span>
+                <span key={i} className="scrub-word" style={{ opacity: 0.4, color: 'var(--text-muted)' }}>{word} </span>
               ))}
             </p>
           </div>

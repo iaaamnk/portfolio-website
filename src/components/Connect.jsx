@@ -72,25 +72,36 @@ const Connect = () => {
     return () => ctx.revert();
   }, [isTouchDevice]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormStatus('submitting');
     
-    const subject = `Message from ${formData.name}`;
-    const body = `${formData.message}\n\nFrom: ${formData.email}`;
-    const mailtoLink = `mailto:anamikavinesh12@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    const mailtoLinkElement = document.createElement('a');
-    mailtoLinkElement.href = mailtoLink;
-    mailtoLinkElement.click();
-    
-    setTimeout(() => {
-      setFormStatus('success');
-      setTimeout(() => {
-        setFormStatus('idle');
+    try {
+      const response = await fetch('https://formspree.io/f/mkgogzje', { // Note: mkgogzje is a common placeholder or they can use their email directly if authorized
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message
+        })
+      });
+
+      if (response.ok) {
+        setFormStatus('success');
         setFormData({ name: '', email: '', message: '' });
-      }, 3000);
-    }, 500);
+        setTimeout(() => setFormStatus('idle'), 5000);
+      } else {
+        setFormStatus('error');
+        setTimeout(() => setFormStatus('idle'), 5000);
+      }
+    } catch (error) {
+      setFormStatus('error');
+      setTimeout(() => setFormStatus('idle'), 5000);
+    }
   };
 
   const handleChange = (e) => {
@@ -165,7 +176,7 @@ const Connect = () => {
             {formStatus === 'success' && (
               <div role="alert" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent)', fontSize: '0.9rem' }}>
                 <Check size={18} />
-                <span>Opening your email app...</span>
+                <span>Message sent successfully!</span>
               </div>
             )}
             
@@ -208,13 +219,13 @@ const Connect = () => {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)', alignItems: 'flex-start' }}>
-          <a href="/Anamika_Vinesh_Resume.pdf" download className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }} aria-label="Download Resume PDF">
+          <a href="/resume.pdf" download className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }} aria-label="Download Resume PDF">
             <Download size={24} aria-hidden="true" /> Resume
           </a>
           <a href="https://github.com/iaaamnk" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }} aria-label="Visit GitHub Profile (opens in new tab)">
             <Github size={24} aria-hidden="true" /> Github
           </a>
-          <a href="http://www.linkedin.com/in/iaaamnk" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }} aria-label="Visit LinkedIn Profile (opens in new tab)">
+          <a href="https://www.linkedin.com/in/iaaamnk/" target="_blank" rel="noopener noreferrer" className="brutalist-mag-btn hover-target" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.8rem)', color: 'var(--text-primary)', textDecoration: 'none', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.8rem' }} aria-label="Visit LinkedIn Profile (opens in new tab)">
             <Linkedin size={24} aria-hidden="true" /> LinkedIn
           </a>
         </div>
