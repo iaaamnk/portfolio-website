@@ -7,6 +7,7 @@ import Lenis from '@studio-freight/lenis';
 // Components
 import Cursor from './components/Cursor';
 import ThemeToggle from './components/ThemeToggle';
+import IntroLoader from './components/IntroLoader';
 import Hero from './components/Hero';
 import Summary from './components/Summary';
 import Milestones from './components/Milestones';
@@ -19,8 +20,20 @@ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [introComplete, setIntroComplete] = useState(false);
+
+  // Lock scroll during intro
+  useEffect(() => {
+    if (!introComplete) {
+      document.body.classList.add('intro-active');
+    } else {
+      document.body.classList.remove('intro-active');
+    }
+  }, [introComplete]);
 
   useLayoutEffect(() => {
+    if (!introComplete) return;
+
     const lenis = new Lenis({
       duration: 1.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -42,7 +55,7 @@ function App() {
 
     const refreshTimeout = setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 100);
+    }, 200);
 
     return () => {
       lenis.destroy();
@@ -50,7 +63,7 @@ function App() {
       clearTimeout(refreshTimeout);
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
-  }, []);
+  }, [introComplete]);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -62,6 +75,7 @@ function App() {
 
   return (
     <div className="app-container">
+      {!introComplete && <IntroLoader onComplete={() => setIntroComplete(true)} />}
       <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
       <Cursor />
       <ThemeToggle isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
