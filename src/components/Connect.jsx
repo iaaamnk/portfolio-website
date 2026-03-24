@@ -72,36 +72,26 @@ const Connect = () => {
     return () => ctx.revert();
   }, [isTouchDevice]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setFormStatus('submitting');
     
-    try {
-      const response = await fetch('https://formspree.io/f/mkgogzje', { // Note: mkgogzje is a common placeholder or they can use their email directly if authorized
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message
-        })
-      });
-
-      if (response.ok) {
-        setFormStatus('success');
+    const subject = `Message from ${formData.name}`;
+    const body = `${formData.message}\n\nFrom: ${formData.email}`;
+    const mailtoLink = `mailto:anamikavinesh12@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Create a temporary link and click it to trigger the email app
+    const mailtoLinkElement = document.createElement('a');
+    mailtoLinkElement.href = mailtoLink;
+    mailtoLinkElement.click();
+    
+    setTimeout(() => {
+      setFormStatus('success');
+      setTimeout(() => {
+        setFormStatus('idle');
         setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setFormStatus('idle'), 5000);
-      } else {
-        setFormStatus('error');
-        setTimeout(() => setFormStatus('idle'), 5000);
-      }
-    } catch (error) {
-      setFormStatus('error');
-      setTimeout(() => setFormStatus('idle'), 5000);
-    }
+      }, 3000);
+    }, 500);
   };
 
   const handleChange = (e) => {
@@ -176,7 +166,7 @@ const Connect = () => {
             {formStatus === 'success' && (
               <div role="alert" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent)', fontSize: '0.9rem' }}>
                 <Check size={18} />
-                <span>Message sent successfully!</span>
+                <span>Opening your email app...</span>
               </div>
             )}
             
