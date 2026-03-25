@@ -178,7 +178,7 @@ const Hero = () => {
                   </div>
                 ) : (
                   <img 
-                    src="/cat_avatar.png" 
+                    src="/anamika_profile.png" 
                     alt="Anamika Vinesh" 
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     onError={handleImageError}
