@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 13% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 5%;
+    --primary: 162 100% 43%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 13% 92%;
+    --secondary-foreground: 220 13% 5%;
+    --muted: 220 13% 92%;
+    --muted-foreground: 215 14% 45%;
+    --accent: 162 100% 43%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 13% 90%;
+    --input: 220 13% 90%;
+    --ring: 162 100% 43%;
+    --radius: 0.625rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 90%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Light Mode Custom Portfolio Colors */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F6F8FA;
+    --bg-card: #FFFFFF;
+    --border-subtle: #D0D7DE;
+    --border-highlight: #00D9A5;
+    --text-primary: #1F2328;
+    --text-secondary: #656D76;
+    --text-muted: #8C959F;
+    --accent-green: #00A67E;
+    --accent-purple: #7C3AED;
+    --selection-bg: rgba(0, 166, 126, 0.3);
+  }
+
+  .dark {
+    --background: 220 13% 5%;
+    --foreground: 0 0% 100%;
+    --card: 220 13% 8%;
+    --card-foreground: 0 0% 100%;
+    --popover: 220 13% 8%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 162 100% 43%;
+    --primary-foreground: 220 13% 5%;
+    --secondary: 220 13% 12%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 220 13% 12%;
+    --muted-foreground: 215 14% 55%;
+    --accent: 162 100% 43%;
+    --accent-foreground: 220 13% 5%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 14% 20%;
+    --input: 215 14% 20%;
+    --ring: 162 100% 43%;
+    --radius: 0.625rem;
+    --sidebar-background: 220 13% 8%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 162 100% 43%;
+    --sidebar-primary-foreground: 220 13% 5%;
+    --sidebar-accent: 220 13% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 215 14% 20%;
+    --sidebar-ring: 162 100% 43%;
+
+    /* Dark Mode Custom Portfolio Colors */
+    --bg-primary: #0D1117;
+    --bg-secondary: #161B22;
+    --bg-card: #1C2128;
+    --border-subtle: #30363D;
+    --border-highlight: #00D9A5;
+    --text-primary: #FFFFFF;
+    --text-secondary: #8B949E;
+    --text-muted: #6E7681;
+    --accent-green: #00D9A5;
+    --accent-purple: #7C3AED;
+    --selection-bg: rgba(0, 217, 165, 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-bg-primary text-text-primary font-sans antialiased;
+    background-color: var(--bg-primary);
+  }
+  
+  ::selection {
+    background-color: var(--selection-bg);
+    color: #FFFFFF;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #00D9A5 0%, #7C3AED 100%);
+  }
+  
+  .border-gradient {
+    border-image: linear-gradient(135deg, #00D9A5 0%, #7C3AED 100%) 1;
+  }
+  
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(rgba(48, 54, 61, 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(48, 54, 61, 0.3) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  
+  .glow-green {
+    box-shadow: 0 0 20px rgba(0, 217, 165, 0.3);
+  }
+  
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-green);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
